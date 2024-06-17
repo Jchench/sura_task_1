@@ -45,13 +45,13 @@ rolling_average_2 <-
 rolling_avgerage <- 
   ggplot(rolling_average_1, aes(x = date_column)) +
   geom_line(data = rolling_average_2, aes(y = Trump_7day_avg, color = "Trump", 
-                                          linetype = "USD/Dornsife")) +
+                                          linetype = "USC-LA Times poll")) +
   geom_line(data = rolling_average_2, aes(y = Clinton_7day_avg, color = "Clinton", 
-                                          linetype = "USD/Dornsife")) +
+                                          linetype = "USC-LA Times poll")) +
   geom_line(aes(y = Trump_7day_avg, color = "Trump", 
-                linetype = "RealClearPolitics")) +
+                linetype = "RCP Poll Average")) +
   geom_line(aes(y = Clinton_7day_avg, color = "Clinton", 
-                linetype = "RealClearPolitics")) +
+                linetype = "RCP Poll Average")) +
   coord_cartesian(ylim = c(30, 70)) +
   labs(title = "7-Day Rolling Average of Polling Results",
        subtitle = "(June 1, 2016 - November 7, 2016)",
