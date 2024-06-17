@@ -2,11 +2,27 @@
 library(tidyverse)
 load("data/cleaned_polls.rda")
 
+# general cleaning
 general_elections_2016_voters <- 
   general_elections_2016 |> 
   separate(sample, into = c("sample_size", "voter_type"), sep = " ") |> 
   mutate(sample_size = as.numeric(sample_size)) |> 
   mutate(pollster = ifelse(str_detect(pollster, "^LA"), "USC-LA Times", "Other"))
+
+# by larger sample sizes
+general_elections_2016_sample <- 
+  general_elections_2016 |> 
+  separate(sample, into = c("sample_size", "voter_type"), sep = " ") |> 
+  mutate(sample_size = as.numeric(sample_size)) |> 
+  group_by(pollster) |> 
+  summarize(mean_sample_size = mean(sample_size),
+            weeks = n()) |> 
+  filter(mean_sample_size >= 1000, mean_sample_size <= 10000) |> 
+  arrange(desc(mean_sample_size))
+
+# save out
+write_csv(general_elections_2016_sample, 
+          file = "general_elections_2016_pollster_samples.csv")
 
 # histogram
 sample_size_facet <- 
